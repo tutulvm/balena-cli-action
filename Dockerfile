@@ -1,23 +1,20 @@
-FROM debian:stable-slim
+FROM debian:buster-slim
 LABEL Description="Use the Balena CLI to perform actions"
 
-# Install the standalone balena-cli package
+# Install the standalone balena-cli package v11.30.10
 RUN apt-get update && apt-get install -y \
     curl \
-	unzip && \
-  cd /opt/ && \
-  curl -s https://api.github.com/repos/balena-io/balena-cli/releases/latest | \
-    grep browser_download_url.*balena-cli-v.*-linux-x64-standalone.zip | \
-	cut -d : -f 2,3 | \
-	xargs -n 1 curl -O -sSL && \
-  unzip balena-cli-*-linux-x64-standalone.zip && \
+	unzip 
+RUN  cd /opt/ && \
+  curl -L https://github.com/balena-io/balena-cli/releases/download/v11.30.10/balena-cli-v11.30.10-linux-x64-standalone.zip  -o balena-cli.zip && \
+  unzip balena-cli.zip && \
   ln -s /opt/balena-cli/balena /usr/bin/ && \
   apt-get purge -y \
     curl \
 	unzip && \
   apt-get autoremove -y && \
   rm -rf \
-    balena-cli-*-linux-x64-standalone.zip \
+    balena-cli.zip \
     /var/lib/apt/lists/*
 
 # Copy entrypoint into `/opt`

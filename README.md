@@ -1,8 +1,10 @@
+#Pinned version of debian and balena-cli to debian buster and balena cli v11.30.10
+
 # Balena CLI
 
 Continuously deliver your applications to [BalenaCloud](https://www.balena.io/).
 
-Based on [Balena Push](https://github.com/theaccordance/balena-push) from [Joe Mainwaring](https://github.com/theaccordance).
+Based on [Balena CLI] (https://github.com/bekriebel/balena-cli-action) and [Balena Push](https://github.com/theaccordance/balena-push)
 
 ## Inputs
 
@@ -36,12 +38,12 @@ on:
 
 jobs:
   balena-deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-bionic
     steps:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Balena Deploy
-        uses: bekriebel/balena-cli-action@v1
+        uses: tutulvm/balena-cli-action@v1
         if: success()
         with:
           balena_api_token: ${{secrets.BALENA_API_TOKEN}}
